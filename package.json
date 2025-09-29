@@ -1,0 +1,15 @@
+{
+  "name": "bundle-luxor-2-mqtt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sander Bakkum",
+  "license": "ISC",
+  "description": "Bundle LuxorLiving IP1 client for Home Assistant MQTT.",
+  "dependencies": {
+    "mqtt": "^5.10.3",
+    "theben-lx-ip1-node": "github:stokworks/theben-lx-ip1-node"
+  }
+}
