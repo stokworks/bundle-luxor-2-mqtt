@@ -7,6 +7,7 @@ const LXIP1 = require('theben-lx-ip1-node').LXIP1;
 const Discovery = require('theben-lx-ip1-node').Discovery;
 
 const MQTT_HOST = process.env.MQTT_HOST;
+const MQTT_PORT = process.env.MQTT_PORT;
 const MQTT_USER = process.env.MQTT_USER;
 const MQTT_PASS = process.env.MQTT_PASS;
 const MQTT_HA_DISCOVERY_PREFIX = process.env.MQTT_HA_DISCOVERY_PREFIX;
@@ -80,7 +81,7 @@ const DEVICES = [
   }
 ]
 
-const mqttClient = mqtt.connect(MQTT_HOST, {
+const mqttClient = mqtt.connect('mqtt://' + MQTT_HOST + ':' + MQTT_PORT, {
   username: MQTT_USER,
   password: MQTT_PASS,
   clientId: 'bundleluxor2mqtt_' + Math.random().toString(16).substr(2, 8),

@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.3
+version: 0.0.4
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -16,7 +16,6 @@ apparmor: false
 services:
   - mqtt:need
 options:
-  mqtt_host: mqtt://localhost
   mqtt_user: null
   mqtt_pass: null
   mqtt_ha_discovery_prefix: homeassistant
@@ -25,7 +24,6 @@ options:
   lx1_user: null
   lx1_pass: null
 schema:
-  mqtt_host: str
   mqtt_user: str
   mqtt_pass: str
   mqtt_ha_discovery_prefix: str

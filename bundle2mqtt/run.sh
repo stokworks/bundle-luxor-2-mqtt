@@ -1,7 +1,8 @@
 #!/usr/bin/with-contenv bashio
 set +u
 
-export MQTT_HOST=$(bashio::config 'mqtt_host')
+export MQTT_HOST=$(bashio::services mqtt "host")
+export MQTT_PORT=$(bashio::services mqtt "port")
 export MQTT_USER=$(bashio::config 'mqtt_user')
 export MQTT_PASS=$(bashio::config 'mqtt_pass')
 export MQTT_HA_DISCOVERY_PREFIX=$(bashio::config 'mqtt_ha_discovery_prefix')
