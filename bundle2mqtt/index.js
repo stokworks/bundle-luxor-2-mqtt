@@ -1,6 +1,4 @@
 const networkInterfaces = require('node:os').networkInterfaces;
-const s = require('node:util').styleText;
-const fs = require('node:fs');
 
 const mqtt = require('mqtt');
 const LXIP1 = require('theben-lx-ip1-node').LXIP1;
@@ -240,12 +238,12 @@ discovery.on('error', (error) => {
 });
 
 discovery.on('device', (device) => {
-  console.log('Discovered device:', s('green', device.deviceInfo.friendlyName), 'on', s('green', device.hpai.ipAddress));
+  console.log('Discovered device:',device.deviceInfo.friendlyName, 'on', device.hpai.ipAddress);
   lxip1.host = device.hpai.ipAddress;
 
   discovery.stop();
 
-  console.log('Requesting device info from', s('green', lxip1.host) + '...');
+  console.log('Requesting device info from', lxip1.host + '...');
   lxip1.getDeviceInfo();
 });
 
@@ -256,9 +254,9 @@ const lxip1 = new LXIP1({
 });
 
 lxip1.on('deviceInfo', (deviceInfo) => {
-  console.log('Device', s('green', deviceInfo.name), 'build', s('green', deviceInfo.build_version));
+  console.log('Device', deviceInfo.name, 'build', deviceInfo.build_version);
   
-  console.log('Starting session on', s('green', lxip1.host), 'as user', s('green', lxip1.username) + '...');
+  console.log('Starting session on', lxip1.host, 'as user', lxip1.username + '...');
   lxip1.login();
 });
 
@@ -317,7 +315,7 @@ lxip1.on('datapoint', (datapoint) => {
   }
 
   datapoint.on('valueChanged', () => {
-    console.log('Received new value for datapoint', datapoint.id, s('green', datapoint.name) + ':', datapoint.value);
+    console.log('Received new value for datapoint', datapoint.id, datapoint.name + ':', datapoint.value);
   });
 });
 
