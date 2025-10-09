@@ -11,6 +11,7 @@ arch:
 description: "Bundle LuxorLiving IP1 gateway 2 MQTT bridge"
 startup: services
 boot: auto
+init: false
 options:
   mqtt_host: mqtt://localhost
   mqtt_user: null
