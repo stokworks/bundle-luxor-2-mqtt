@@ -5,3 +5,4 @@ build/
 builderror.log
 npm-debug.log
 package-lock.json
+.idea/

@@ -1,0 +1,31 @@
+name: bundle2mqtt
+version: 0.0.1
+slug: bundle2mqtt
+url: https://github.com/stokworks/bundle-luxor-2-mqtt
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+description: "Bundle LuxorLiving IP1 gateway 2 MQTT bridge"
+startup: services
+boot: auto
+options:
+  mqtt_host: mqtt://localhost
+  mqtt_user: null
+  mqtt_pass: null
+  mqtt_ha_discovery_prefix: homeassistant
+  mqtt_bridge_topic_prefix: bundle2mqtt
+  mqtt_discovery_send_delay: 3737
+  lx1_user: null
+  lx1_pass: null
+schema:
+  mqtt_host: str
+  mqtt_user: str
+  mqtt_pass: str
+  mqtt_ha_discovery_prefix: str
+  mqtt_bridge_topic_prefix: str
+  mqtt_discovery_send_delay: int(0,)
+  lx1_user: str
+  lx1_pass: str

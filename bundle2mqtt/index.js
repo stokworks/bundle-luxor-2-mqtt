@@ -1,20 +1,21 @@
 const networkInterfaces = require('node:os').networkInterfaces;
 const s = require('node:util').styleText;
+const fs = require('node:fs');
 
 const mqtt = require('mqtt');
 const LXIP1 = require('theben-lx-ip1-node').LXIP1;
 const Discovery = require('theben-lx-ip1-node').Discovery;
 
-const MQTT_HOST = 'mqtt://10.0.0.14';
-const MQTT_USER = 'bundle2mqtt';
-const MQTT_PASS = 'bundle2mqtt123';
-const MQTT_HA_DISCOVERY_PREFIX = 'homeassistant';
+const MQTT_HOST = process.env.MQTT_HOST;
+const MQTT_USER = process.env.MQTT_USER;
+const MQTT_PASS = process.env.MQTT_PASS;
+const MQTT_HA_DISCOVERY_PREFIX = process.env.MQTT_HA_DISCOVERY_PREFIX;
 
-const MQTT_BRIDGE_TOPIC_PREFIX = 'bundleluxor2mqtt';
-const MQTT_DISCOVERY_SEND_DELAY = 3737;
+const MQTT_BRIDGE_TOPIC_PREFIX = process.env.MQTT_BRIDGE_TOPIC_PREFIX;
+const MQTT_DISCOVERY_SEND_DELAY = process.env.MQTT_DISCOVERY_SEND_DELAY;
 
-const LX1_USER = 'admin';
-const LX1_PASS = 'PF25-36';
+const LX1_USER = process.env.LX1_USER;
+const LX1_PASS = process.env.LX1_PASS;
 
 const DEVICES = [
   {
@@ -219,7 +220,7 @@ const getLocalAddress = () => {
       }
 
       const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4;
-      if (net.family != familyV4Value) {
+      if (net.family !== familyV4Value) {
         continue;
       }
 
@@ -227,8 +228,6 @@ const getLocalAddress = () => {
     }
   }
 }
-
-const localAddress = getLocalAddress();
 
 const discovery = new Discovery({
   advertiseAddress: getLocalAddress()
@@ -301,6 +300,11 @@ lxip1.on('webSocketConnected', () => {
 
 lxip1.on('webSocketDisconnected', (disconnect) => {
   console.log('WebSocket disconnected:', s('green', disconnect.description));
+});
+
+lxip1.on('error', (error) => {
+  console.error(error);
+  process.exit(1);
 });
 
 lxip1.on('datapoint', (datapoint) => {
