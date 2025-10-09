@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.2
+version: 0.0.3
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -12,6 +12,7 @@ description: "Bundle LuxorLiving IP1 gateway 2 MQTT bridge"
 startup: application
 boot: auto
 init: false
+apparmor: false
 services:
   - mqtt:need
 options:
