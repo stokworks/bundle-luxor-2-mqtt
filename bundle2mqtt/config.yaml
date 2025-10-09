@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.4
+version: 0.0.5
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -13,6 +13,7 @@ startup: application
 boot: auto
 init: false
 apparmor: false
+host_network: true
 services:
   - mqtt:need
 options:
