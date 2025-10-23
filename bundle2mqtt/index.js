@@ -411,7 +411,7 @@ const publishHeatingDiscovery = function(devInfo) {
     unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
     name: null,
 
-    modes: ['auto'],
+    modes: ['heat'],
     temperature_unit: 'C',
     temp_step: 0.1,
 
@@ -423,7 +423,10 @@ const publishHeatingDiscovery = function(devInfo) {
     temperature_state_template: '{{ value_json.state.target_temperature }}',
 
     mode_state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
-    mode_state_template: '{{ value_json.state.mode }}'
+    mode_state_template: '{{ value_json.state.mode }}',
+
+    action_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
+    action_template: '{{ value_json.state.action }}',
   }
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_valve'] = {
@@ -490,6 +493,7 @@ const attachDataPointToHeating = function(datapoint, device) {
     device.get_heating_state_datapoint = datapoint;
 
     datapoint.on('valueChanged', () => {
+      publishHeatingState(device);
       publishHeatingValve(device);
     });
   }
@@ -532,22 +536,24 @@ const publishFanState = function(device) {
 }
 
 const publishHeatingState = function(device) {
-  if (!(device.get_target_temp_datapoint && device.get_current_temp_datapoint)) {
+  if (!(device.get_target_temp_datapoint && device.get_current_temp_datapoint && device.get_heating_state_datapoint)) {
     return;
   }
 
-  if (device.get_target_temp_datapoint.value === null || device.get_current_temp_datapoint.value === null) {
+  if (device.get_target_temp_datapoint.value === null || device.get_current_temp_datapoint.value === null || device.get_heating_state_datapoint.value === null) {
     return;
   }
 
   const target_temperature = device.get_target_temp_datapoint.value;
   const current_temperature = device.get_current_temp_datapoint.value;
+  const action = device.get_heating_state_datapoint.value > 0 ? 'heating' : 'idle';
 
   mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
     'state': {
       'target_temperature': target_temperature,
       'current_temperature': current_temperature,
-      'mode': 'auto'
+      'mode': 'heat',
+      'action': action,
     }
   }));
 }
