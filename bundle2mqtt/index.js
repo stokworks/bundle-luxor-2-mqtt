@@ -298,7 +298,7 @@ lxip1.on('webSocketConnected', () => {
 });
 
 lxip1.on('webSocketDisconnected', (disconnect) => {
-  console.log('WebSocket disconnected:', s('green', disconnect.description));
+  console.log('WebSocket disconnected:', disconnect.description);
 });
 
 lxip1.on('error', (error) => {
