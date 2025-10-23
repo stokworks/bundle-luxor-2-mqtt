@@ -194,7 +194,7 @@ const publishBridgeDiscovery = function() {
         device_class: 'connectivity',
         entity_category: 'diagnostic',
         name: 'Connection state',
-        object_id: 'bundleluxor2mqtt_bridge_connection_state',
+        default_entity_id: 'connectivity.bundleluxor2mqtt_bridge_connection_state',
         unique_id: 'bundleluxor2mqtt_bridge_connection_state',
 
         payload_on: 'online',
@@ -338,7 +338,7 @@ const publishSwitchDiscovery = function(devInfo) {
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
     platform: 'switch',
     device_class: 'switch',
-    object_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
+    default_entity_id: 'switch.bundleluxor2mqtt_' + devInfo.idpart + '_state',
     unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
     name: null,
 
@@ -370,7 +370,7 @@ const publishFanDiscovery = function(devInfo) {
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
     platform: 'fan',
-    object_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
+    default_entity_id: 'fan.bundleluxor2mqtt_' + devInfo.idpart + '_state',
     unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
     name: null,
     
@@ -407,7 +407,7 @@ const publishHeatingDiscovery = function(devInfo) {
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
     platform: 'climate',
-    object_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
+    default_entity_id: 'climate.bundleluxor2mqtt_' + devInfo.idpart + '_state',
     unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
     name: null,
 
@@ -428,7 +428,7 @@ const publishHeatingDiscovery = function(devInfo) {
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_valve'] = {
     platform: 'sensor',
-    object_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_valve',
+    default_entity_id: 'sensor.bundleluxor2mqtt_' + devInfo.idpart + '_valve',
     unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_valve',
     name: 'valve',
 
