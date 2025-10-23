@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.8
+version: 0.0.9
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
