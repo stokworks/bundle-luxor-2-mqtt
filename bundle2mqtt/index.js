@@ -515,6 +515,7 @@ const publishSwitchState = function(device) {
   }));
 }
 
+let skipPublishNextFanOffState = false;
 const publishFanState = function(device) {
   if (!(device.get_value_med_datapoint && device.get_value_high_datapoint)) {
     return;
@@ -526,6 +527,12 @@ const publishFanState = function(device) {
 
   const state = device.get_value_high_datapoint.value ? 'high' : 
                 (device.get_value_med_datapoint.value ? 'medium' : 'off');
+
+  if (state === 'off' && skipPublishNextFanOffState) {
+    skipPublishNextFanOffState = false;
+    console.log('Skipped publishing fan off state because we just switched fan modes');
+    return;
+  }
 
   mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart, JSON.stringify({
     'state': {
@@ -595,9 +602,13 @@ const setFanState = function(device, topic, message) {
       device.set_value_med_datapoint.setValue(false);
       device.set_value_high_datapoint.setValue(false);
     } else if (message === '1') {
+      skipPublishNextFanOffState = true;
+      setTimeout(() => skipPublishNextFanOffState = false, 250);
       device.set_value_med_datapoint.setValue(true);
       device.set_value_high_datapoint.setValue(false);
     } else if (message === '2') {
+      skipPublishNextFanOffState = true;
+      setTimeout(() => skipPublishNextFanOffState = false, 250);
       device.set_value_med_datapoint.setValue(false);
       device.set_value_high_datapoint.setValue(true);
     }
