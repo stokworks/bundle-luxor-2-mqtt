@@ -111,6 +111,8 @@ const DEVICES = [
   }
 ]
 
+console.log('DEVICES: ', DEVICES);
+
 const mqttClient = mqtt.connect('mqtt://' + MQTT_HOST + ':' + MQTT_PORT, {
   username: MQTT_USER,
   password: MQTT_PASS,
