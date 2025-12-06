@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.12
+version: 0.0.13
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -19,16 +19,138 @@ services:
 options:
   mqtt_user: null
   mqtt_pass: null
+
   mqtt_ha_discovery_prefix: homeassistant
   mqtt_bridge_topic_prefix: bundle2mqtt
   mqtt_discovery_send_delay: 3737
+
   lx1_user: null
   lx1_pass: null
+
+  switch_1_enabled: true
+  switch_1_name: Luxor Switch Bathroom
+  switch_1_set_value_datapoint: 151
+  switch_1_get_value_datapoint: 152
+
+  switch_2_enabled: true
+  switch_2_name: Luxor Switch Kitchen
+  switch_2_set_value_datapoint: 153
+  switch_2_get_value_datapoint: 154
+
+  switch_3_enabled: true
+  switch_3_name: Luxor Switch Living Room
+  switch_3_set_value_datapoint: 155
+  switch_3_get_value_datapoint: 156
+
+  switch_4_enabled: true
+  switch_4_name: Luxor Switch Bedroom
+  switch_4_set_value_datapoint: 157
+  switch_4_get_value_datapoint: 158
+
+  switch_5_enabled: false
+  switch_5_name: null
+  switch_5_set_value_datapoint: 159
+  switch_5_get_value_datapoint: 160
+
+  switch_6_enabled: true
+  switch_6_name: Luxor Switch Fire Hatch
+  switch_6_set_value_datapoint: 161
+  switch_6_get_value_datapoint: 162
+
+  switch_7_enabled: false
+  switch_7_name: null
+  switch_7_set_value_datapoint: 163
+  switch_7_get_value_datapoint: 164
+
+  switch_8_enabled: true
+  switch_8_name: Luxor Switch Bathroom Mirror
+  switch_8_set_value_datapoint: 165
+  switch_8_get_value_datapoint: 166
+
+  switch_9_enabled: false
+  switch_9_name: null
+  switch_9_set_value_datapoint: null
+  switch_9_get_value_datapoint: null
+
+  fan_enabled: true
+  fan_name: DucoBox Silent
+  fan_set_value_med_datapoint: 159
+  fan_get_value_med_datapoint: 160
+  fan_set_value_high_datapoint: 163
+  fan_get_value_high_datapoint: 164
+
+  heating_enabled: true
+  heating_name: Luxor Heating
+  heating_set_target_temp_datatpoint: 167
+  heating_get_target_temp_datapoint: 170
+  heating_get_current_temp_datapoint: 168
+  heating_get_heating_state_datapoint: 169
 schema:
   mqtt_user: str
   mqtt_pass: str
+
   mqtt_ha_discovery_prefix: str
   mqtt_bridge_topic_prefix: str
   mqtt_discovery_send_delay: int(0,)
+
   lx1_user: str
   lx1_pass: str
+
+  switch_1_enabled: bool
+  switch_1_name: str
+  switch_1_set_value_datapoint: int
+  switch_1_get_value_datapoint: int
+
+  switch_2_enabled: bool
+  switch_2_name: str
+  switch_2_set_value_datapoint: int
+  switch_2_get_value_datapoint: int
+
+  switch_3_enabled: bool
+  switch_3_name: str
+  switch_3_set_value_datapoint: int
+  switch_3_get_value_datapoint: int
+
+  switch_4_enabled: bool
+  switch_4_name: str
+  switch_4_set_value_datapoint: int
+  switch_4_get_value_datapoint: int
+
+  switch_5_enabled: bool
+  switch_5_name: str
+  switch_5_set_value_datapoint: int
+  switch_5_get_value_datapoint: int
+
+  switch_6_enabled: bool
+  switch_6_name: str
+  switch_6_set_value_datapoint: int
+  switch_6_get_value_datapoint: int
+
+  switch_7_enabled: bool
+  switch_7_name: str
+  switch_7_set_value_datapoint: int
+  switch_7_get_value_datapoint: int
+
+  switch_8_enabled: bool
+  switch_8_name: str
+  switch_8_set_value_datapoint: int
+  switch_8_get_value_datapoint: int
+
+  switch_9_enabled: bool
+  switch_9_name: str
+  switch_9_set_value_datapoint: int
+  switch_9_get_value_datapoint: int
+
+  fan_enabled: bool
+  fan_name: str
+  fan_set_value_med_datapoint: int
+  fan_get_value_med_datapoint: int
+  fan_set_value_high_datapoint: int
+  fan_get_value_high_datapoint: int
+
+  heating_enabled: bool
+  heating_name: str
+  heating_set_target_temp_datatpoint: int
+  heating_get_target_temp_datapoint: int
+  heating_get_current_temp_datapoint: int
+  heating_get_heating_state_datapoint: int

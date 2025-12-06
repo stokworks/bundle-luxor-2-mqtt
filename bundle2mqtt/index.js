@@ -20,62 +20,94 @@ const DEVICES = [
   {
     type: 'switch',
     idpart: 'switch_1',
-    name: 'Luxor Switch Bathroom',
-    set_value: 151,
-    get_value: 152,
+    enabled: process.env.SWITCH_1_ENABLED,
+    name: process.env.SWITCH_1_NAME,
+    set_value: process.env.SWITCH_1_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_1_GET_VALUE_NAME,
   },
   {
     type: 'switch',
     idpart: 'switch_2',
-    name: 'Luxor Switch Kitchen',
-    set_value: 153,
-    get_value: 154,
+    enabled: process.env.SWITCH_2_ENABLED,
+    name: process.env.SWITCH_2_NAME,
+    set_value: process.env.SWITCH_2_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_2_GET_VALUE_NAME,
   },
   {
     type: 'switch',
     idpart: 'switch_3',
-    name: 'Luxor Switch Living Room',
-    set_value: 155,
-    get_value: 156,
+    enabled: process.env.SWITCH_3_ENABLED,
+    name: process.env.SWITCH_3_NAME,
+    set_value: process.env.SWITCH_3_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_3_GET_VALUE_NAME,
   },
   {
     type: 'switch',
     idpart: 'switch_4',
-    name: 'Luxor Switch Bedroom',
-    set_value: 157,
-    get_value: 158,
+    enabled: process.env.SWITCH_4_ENABLED,
+    name: process.env.SWITCH_4_NAME,
+    set_value: process.env.SWITCH_4_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_4_GET_VALUE_NAME,
+  },
+  {
+    type: 'switch',
+    idpart: 'switch_5',
+    enabled: process.env.SWITCH_5_ENABLED,
+    name: process.env.SWITCH_5_NAME,
+    set_value: process.env.SWITCH_5_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_5_GET_VALUE_NAME,
   },
   {
     type: 'switch',
     idpart: 'switch_6',
-    name: 'Luxor Switch Fire Hatch',
-    set_value: 161,
-    get_value: 162,
+    enabled: process.env.SWITCH_6_ENABLED,
+    name: process.env.SWITCH_6_NAME,
+    set_value: process.env.SWITCH_6_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_6_GET_VALUE_NAME,
+  },
+  {
+    type: 'switch',
+    idpart: 'switch_7',
+    enabled: process.env.SWITCH_7_ENABLED,
+    name: process.env.SWITCH_7_NAME,
+    set_value: process.env.SWITCH_7_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_7_GET_VALUE_NAME,
   },
   {
     type: 'switch',
     idpart: 'switch_8',
-    name: 'Luxor Switch Bathroom Mirror',
-    set_value: 165,
-    get_value: 166,
+    enabled: process.env.SWITCH_8_ENABLED,
+    name: process.env.SWITCH_8_NAME,
+    set_value: process.env.SWITCH_8_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_8_GET_VALUE_NAME,
+  },
+  {
+    type: 'switch',
+    idpart: 'switch_9',
+    enabled: process.env.SWITCH_9_ENABLED,
+    name: process.env.SWITCH_9_NAME,
+    set_value: process.env.SWITCH_9_SET_VALUE_NAME,
+    get_value: process.env.SWITCH_9_GET_VALUE_NAME,
   },
   {
     type: 'fan',
     idpart: 'fan',
-    name: 'DucoBox Silent',
-    set_value_med: 159,
-    get_value_med: 160,
-    set_value_high: 163,
-    get_value_high: 164,
+    enabled: process.env.FAN_ENABLED,
+    name: process.env.FAN_NAME,
+    set_value_med: process.env.FAN_SET_VALUE_MED_DATAPOINT,
+    get_value_med: process.env.FAN_GET_VALUE_MED_DATAPOINT,
+    set_value_high: process.env.FAN_SET_VALUE_HIGH_DATAPOINT,
+    get_value_high: process.env.FAN_GET_VALUE_HIGH_DATAPOINT,
   },
   {
     type: 'heating',
     idpart: 'heating',
-    name: 'Luxor Heating',
-    set_target_temp: 167,
-    get_target_temp: 170,
-    get_current_temp: 168,
-    get_heating_state: 169,
+    enabled: process.env.HEATING_ENABLED,
+    name: process.env.HEATING_NAME,
+    set_target_temp: process.env.HEATING_SET_TARGET_TEMP_DATAPOINT,
+    get_target_temp: process.env.HEATING_GET_TARGET_TEMP_DATAPOINT,
+    get_current_temp: process.env.HEATING_GET_CURRENT_TEMP_DATAPOINT,
+    get_heating_state: process.env.HEATING_GET_STATE_DATAPOINT,
   }
 ]
 
@@ -320,6 +352,10 @@ lxip1.on('datapoint', (datapoint) => {
 });
 
 const publishSwitchDiscovery = function(devInfo) {
+  if (!devInfo.enabled) {
+    return;
+  }
+
   const payload = {
     device: {
       identifiers: ['bundleluxor2mqtt_' + devInfo.idpart],
@@ -353,6 +389,10 @@ const publishSwitchDiscovery = function(devInfo) {
 }
 
 const publishFanDiscovery = function(devInfo) {
+  if (!devInfo.enabled) {
+    return;
+  }
+
   const payload = {
     device: {
       identifiers: ['bundleluxor2mqtt_' + devInfo.idpart],
@@ -390,6 +430,10 @@ const publishFanDiscovery = function(devInfo) {
 }
 
 const publishHeatingDiscovery = function(devInfo) {
+  if (!devInfo.enabled) {
+    return;
+  }
+
   const payload = {
     device: {
       identifiers: ['bundleluxor2mqtt_' + devInfo.idpart],
@@ -443,6 +487,10 @@ const publishHeatingDiscovery = function(devInfo) {
 }
 
 const attachDataPointToSwitch = function(datapoint, device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (device.set_value === datapoint.id) {
     device.set_value_datapoint = datapoint;
   } else if (device.get_value === datapoint.id) {
@@ -455,6 +503,10 @@ const attachDataPointToSwitch = function(datapoint, device) {
 }
 
 const attachDataPointToFan = function(datapoint, device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (device.set_value_med === datapoint.id) {
     device.set_value_med_datapoint = datapoint;
   } else if (device.set_value_high === datapoint.id) {
@@ -475,6 +527,10 @@ const attachDataPointToFan = function(datapoint, device) {
 }
 
 const attachDataPointToHeating = function(datapoint, device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (device.set_target_temp === datapoint.id) {
     device.set_target_temp_datapoint = datapoint;
   } else if (device.get_target_temp === datapoint.id) {
@@ -500,6 +556,10 @@ const attachDataPointToHeating = function(datapoint, device) {
 }
 
 const publishSwitchState = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!device.get_value_datapoint) {
     return;
   }
@@ -517,6 +577,10 @@ const publishSwitchState = function(device) {
 
 let skipPublishNextFanOffState = false;
 const publishFanState = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!(device.get_value_med_datapoint && device.get_value_high_datapoint)) {
     return;
   }
@@ -543,6 +607,10 @@ const publishFanState = function(device) {
 }
 
 const publishHeatingState = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!(device.get_target_temp_datapoint && device.get_current_temp_datapoint && device.get_heating_state_datapoint)) {
     return;
   }
@@ -566,6 +634,10 @@ const publishHeatingState = function(device) {
 }
 
 const publishHeatingValve = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!device.get_heating_state_datapoint) {
     return;
   }
@@ -582,6 +654,10 @@ const publishHeatingValve = function(device) {
 }
 
 const setSwitchState = function(device, topic, message) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!device.set_value_datapoint) {
     return;
   }
@@ -590,6 +666,10 @@ const setSwitchState = function(device, topic, message) {
 }
 
 const setFanState = function(device, topic, message) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!(device.set_value_med_datapoint && device.set_value_high_datapoint)) {
     return;
   }
@@ -616,6 +696,10 @@ const setFanState = function(device, topic, message) {
 }
 
 const setHeatingState = function(device, topic, message) {
+  if (!device.enabled) {
+    return;
+  }
+
   if (!device.set_target_temp_datapoint) {
     return;
   }
