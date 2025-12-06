@@ -531,6 +531,9 @@ const publishBlindsDiscovery = function(devInfo) {
 
     command_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set',
 
+    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
+    value_template: '{{ value_json.state.state }}',
+
     position_closed: 255,
     position_open: 0,
     position_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
@@ -708,28 +711,6 @@ const publishHeatingState = function(device) {
   }));
 }
 
-const publishBlindsState = function(device) {
-  if (!device.enabled) {
-    return;
-  }
-
-  if (!device.get_position_datapoint) {
-    return;
-  }
-
-  if (device.get_position_datapoint.value === null) {
-    return;
-  }
-
-  const position = device.get_position_datapoint.value;
-
-  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
-    'state': {
-      'position': position,
-    }
-  }));
-}
-
 const publishHeatingValve = function(device) {
   if (!device.enabled) {
     return;
@@ -747,6 +728,29 @@ const publishHeatingValve = function(device) {
 
   mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/valve', JSON.stringify({
     'state': state
+  }));
+}
+
+const publishBlindsState = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
+  if (!device.get_position_datapoint) {
+    return;
+  }
+
+  if (device.get_position_datapoint.value === null) {
+    return;
+  }
+
+  const position = device.get_position_datapoint.value;
+
+  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
+    'state': {
+      'state': position === 0 ? 'open' : position === 255 ? 'closed' : 'stopped',
+      'position': position,
+    }
   }));
 }
 
