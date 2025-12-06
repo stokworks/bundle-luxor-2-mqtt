@@ -621,7 +621,7 @@ const attachDataPointToBlinds = function(datapoint, device) {
     device.set_stop_datapoint = datapoint;
   } else if (device.set_position === datapoint.id) {
     device.set_position_datapoint = datapoint;
-  } else if (deivce.get_position === datapoint.id) {
+  } else if (device.get_position === datapoint.id) {
     device.get_position_datapoint = datapoint;
 
     datapoint.on('valueChanged', () => {
