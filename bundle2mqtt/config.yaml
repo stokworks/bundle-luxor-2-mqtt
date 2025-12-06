@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.13
+version: 0.0.14
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -48,7 +48,7 @@ options:
   switch_4_get_value_datapoint: 158
 
   switch_5_enabled: false
-  switch_5_name: null
+  switch_5_name: Luxor Switch Fan Speed Medium
   switch_5_set_value_datapoint: 159
   switch_5_get_value_datapoint: 160
 
@@ -58,7 +58,7 @@ options:
   switch_6_get_value_datapoint: 162
 
   switch_7_enabled: false
-  switch_7_name: null
+  switch_7_name: Luxor Switch Fan Speed High
   switch_7_set_value_datapoint: 163
   switch_7_get_value_datapoint: 164
 
@@ -68,9 +68,9 @@ options:
   switch_8_get_value_datapoint: 166
 
   switch_9_enabled: false
-  switch_9_name: null
-  switch_9_set_value_datapoint: null
-  switch_9_get_value_datapoint: null
+  switch_9_name: Luxor Switch 9
+  switch_9_set_value_datapoint: 167
+  switch_9_get_value_datapoint: 168
 
   fan_enabled: true
   fan_name: DucoBox Silent
