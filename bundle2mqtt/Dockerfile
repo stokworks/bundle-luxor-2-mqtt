@@ -7,7 +7,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN apk add --no-cache \
     nodejs \
     npm \
-    git
+    git \
+    build-base
 
 COPY package.json /
 COPY index.js /
