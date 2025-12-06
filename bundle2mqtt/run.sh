@@ -70,7 +70,7 @@ export HEATING_NAME=$(bashio::config 'heating_name')
 export HEATING_SET_TARGET_TEMP_DATAPOINT=$(bashio::config 'heating_set_target_temp_datapoint')
 export HEATING_GET_TARGET_TEMP_DATAPOINT=$(bashio::config 'heating_get_target_temp_datapoint')
 export HEATING_GET_CURRENT_TEMP_DATAPOINT=$(bashio::config 'heating_get_current_temp_datapoint')
-export HEATING_GET_STATE_DATAPOINT=$(bashio::config 'heating_get_state_datapoint')
+export HEATING_GET_HEATING_STATE_DATAPOINT=$(bashio::config 'heating_get_heating_state_datapoint')
 
 bashio::log.info "Starting bundle2mqtt service."
 npm run start

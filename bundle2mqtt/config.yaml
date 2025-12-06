@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.15
+version: 0.0.16
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -81,7 +81,7 @@ options:
 
   heating_enabled: true
   heating_name: Luxor Heating
-  heating_set_target_temp_datatpoint: 167
+  heating_set_target_temp_datapoint: 167
   heating_get_target_temp_datapoint: 170
   heating_get_current_temp_datapoint: 168
   heating_get_heating_state_datapoint: 169
