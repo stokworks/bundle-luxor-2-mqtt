@@ -108,6 +108,16 @@ const DEVICES = [
     get_target_temp: parseInt(process.env.HEATING_GET_TARGET_TEMP_DATAPOINT),
     get_current_temp: parseInt(process.env.HEATING_GET_CURRENT_TEMP_DATAPOINT),
     get_heating_state: parseInt(process.env.HEATING_GET_HEATING_STATE_DATAPOINT),
+  },
+  {
+    type: 'blinds',
+    idpart: 'blinds',
+    enabled: process.env.BLINDS_ENABLED === 'true',
+    name: process.env.BLINDS_NAME,
+    set_direction: parseInt(process.env.BLINDS_SET_DIRECTION_DATAPOINT),
+    set_stop: parseInt(process.env.BLINDS_SET_STOP_DATAPOINT),
+    set_position: parseInt(process.env.BLINDS_SET_POSITION_DATAPOINT),
+    get_position: parseInt(process.env.BLINDS_GET_POSITION_DATAPOINT),
   }
 ]
 
@@ -180,6 +190,8 @@ const receivedBridgeMessage = function(topic, message) {
         setFanState(device, parts[3], message);
       } else if (device.type === 'heating') {
         setHeatingState(device, parts[3], message);
+      } else if (device.type === 'blinds') {
+        setBlindsState(device, parts[3], message);
       }
     }
   }
@@ -205,6 +217,8 @@ const publishDeviceDiscovery = function() {
       publishFanDiscovery(device);
     } else if (device.type === 'heating') {
       publishHeatingDiscovery(device);
+    } else if (device.type === 'blinds') {
+      publishBlindsDiscovery(device);
     } else {
       console.error('Unmatched device type', device.type);
     }
@@ -346,6 +360,7 @@ lxip1.on('datapoint', (datapoint) => {
     attachDataPointToSwitch(datapoint, device);
     attachDataPointToFan(datapoint, device);
     attachDataPointToHeating(datapoint, device);
+    attachDataPointToBlinds(datapoint, device);
   }
 
   datapoint.on('valueChanged', () => {
@@ -370,7 +385,6 @@ const publishSwitchDiscovery = function(devInfo) {
       name: 'BundleLuxor2MQTT'
     },
     components: { },
-    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
   }
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
@@ -383,7 +397,7 @@ const publishSwitchDiscovery = function(devInfo) {
     payload_on: 'on',
     payload_off: 'off',
     command_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set',
-    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
+    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
     value_template: '{{ value_json.state }}'
   }
 
@@ -407,7 +421,6 @@ const publishFanDiscovery = function(devInfo) {
       name: 'BundleLuxor2MQTT'
     },
     components: { },
-    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
   }
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
@@ -418,13 +431,13 @@ const publishFanDiscovery = function(devInfo) {
     
     speed_range_max: 2,
     percentage_command_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set/percentage',
-    percentage_state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
+    percentage_state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
     percentage_value_template: '{{ value_json.state.percentage }}',
 
     payload_on: 'on',
     payload_off: 'off',
     command_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set/on',
-    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
+    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
     state_value_template: '{{ value_json.state.on }}'
   }
 
@@ -448,7 +461,6 @@ const publishHeatingDiscovery = function(devInfo) {
       name: 'BundleLuxor2MQTT'
     },
     components: { },
-    state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart,
   }
 
   payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
@@ -483,6 +495,47 @@ const publishHeatingDiscovery = function(devInfo) {
 
     state_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/valve',
     value_template: '{{ value_json.state }}'
+  }
+
+  mqttClient.publish(MQTT_HA_DISCOVERY_PREFIX + '/device/bundleluxor2mqtt_' + devInfo.idpart + '/config', JSON.stringify(payload));
+}
+
+const publishBlindsDiscovery = function(devInfo) {
+  if (!devInfo.enabled) {
+    return;
+  }
+
+  const payload = {
+    device: {
+      identifiers: ['bundleluxor2mqtt_' + devInfo.idpart],
+      name: devInfo.name,
+      manufacturer: 'Theben',
+      model: 'Blinds',
+      via_device: 'bundleluxor2mqtt_bridge'
+    },
+    origin: {
+      name: 'BundleLuxor2MQTT'
+    },
+    components: { },
+  }
+
+  payload.components['bundleluxor2mqtt_' + devInfo.idpart + '_state'] = {
+    platform: 'cover',
+    default_entity_id: 'cover.bundleluxor2mqtt_' + devInfo.idpart + '_state',
+    unique_id: 'bundleluxor2mqtt_' + devInfo.idpart + '_state',
+    name: null,
+
+    payload_open: 'open',
+    payload_close: 'close',
+    payload_stop: 'stop',
+
+    command_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set',
+
+    position_closed: 255,
+    position_open: 0,
+    position_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/state',
+    position_template: '{{ value_json.state.position }}',
+    set_position_topic: MQTT_BRIDGE_TOPIC_PREFIX + '/' + devInfo.idpart + '/set/position'
   }
 
   mqttClient.publish(MQTT_HA_DISCOVERY_PREFIX + '/device/bundleluxor2mqtt_' + devInfo.idpart + '/config', JSON.stringify(payload));
@@ -557,6 +610,26 @@ const attachDataPointToHeating = function(datapoint, device) {
   }
 }
 
+const attachDataPointToBlinds = function(datapoint, device) {
+  if (!device.enabled) {
+    return;
+  }
+
+  if (device.set_direction === datapoint.id) {
+    device.set_direction_datapoint = datapoint;
+  } else if (device.set_stop === datapoint.id) {
+    device.set_stop_datapoint = datapoint;
+  } else if (device.set_position === datapoint.id) {
+    device.set_position_datapoint = datapoint;
+  } else if (deivce.get_position === datapoint.id) {
+    device.get_position_datapoint = datapoint;
+
+    datapoint.on('valueChanged', () => {
+      publishBlindsState(device);
+    });
+  }
+}
+
 const publishSwitchState = function(device) {
   if (!device.enabled) {
     return;
@@ -572,7 +645,7 @@ const publishSwitchState = function(device) {
 
   const state = device.get_value_datapoint.value;
 
-  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart, JSON.stringify({
+  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
     'state': (state ? 'on' : 'off')
   }));
 }
@@ -600,7 +673,7 @@ const publishFanState = function(device) {
     return;
   }
 
-  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart, JSON.stringify({
+  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
     'state': {
       'on': state === 'off' ? 'off' : 'on',
       'percentage': state === 'high' ? 2 : (state === 'medium' ? 1 : 0)
@@ -631,6 +704,28 @@ const publishHeatingState = function(device) {
       'current_temperature': current_temperature,
       'mode': 'heat',
       'action': action,
+    }
+  }));
+}
+
+const publishBlindsState = function(device) {
+  if (!device.enabled) {
+    return;
+  }
+
+  if (!device.get_position_datapoint) {
+    return;
+  }
+
+  if (device.get_position_datapoint.value === null) {
+    return;
+  }
+
+  const position = device.get_position_datapoint.value;
+
+  mqttClient.publish(MQTT_BRIDGE_TOPIC_PREFIX + '/' + device.idpart + '/state', JSON.stringify({
+    'state': {
+      'position': position,
     }
   }));
 }
@@ -707,4 +802,26 @@ const setHeatingState = function(device, topic, message) {
   }
 
   device.set_target_temp_datapoint.setValue(message);
+}
+
+const setBlindsState = function(device, topic, message) {
+  if (!device.enabled) {
+    return;
+  }
+
+  if (!(device.set_stop_datapoint && device.set_position_datapoint && device.set_stop_datapoint)) {
+    return;
+  }
+
+  if (topic === 'position') {
+    device.set_position_datapoint.setValue(message);
+  } else {
+    if (message === 'open') {
+      device.set_direction_datapoint.setValue(true);
+    } else if (message === 'close') {
+      device.set_direction_datapoint.setValue(false);
+    } else if (message === 'stop') {
+      device.set_stop_datapoint.setValue(true);
+    }
+  }
 }

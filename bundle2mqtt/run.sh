@@ -72,5 +72,12 @@ export HEATING_GET_TARGET_TEMP_DATAPOINT=$(bashio::config 'heating_get_target_te
 export HEATING_GET_CURRENT_TEMP_DATAPOINT=$(bashio::config 'heating_get_current_temp_datapoint')
 export HEATING_GET_HEATING_STATE_DATAPOINT=$(bashio::config 'heating_get_heating_state_datapoint')
 
+export BLINDS_ENABLED=$(bashio::config 'blinds_enabled')
+export BLINDS_NAME=$(bashio::config 'blinds_name')
+export BLINDS_SET_DIRECTION_DATAPOINT=$(bashio::config 'blinds_set_direction_datapoint')
+export BLINDS_SET_STOP_DATAPOINT=$(bashio::config 'blinds_set_stop_datapoint')
+export BLINDS_SET_POSITION_DATAPOINT=$(bashio::config 'blinds_set_position_datapoint')
+export BLINDS_GET_POSITION_DATAPOINT=$(bashio::config 'blinds_get_position_datapoint')
+
 bashio::log.info "Starting bundle2mqtt service."
 npm run start

@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.17
+version: 0.0.18
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -85,6 +85,19 @@ options:
   heating_get_target_temp_datapoint: 170
   heating_get_current_temp_datapoint: 168
   heating_get_heating_state_datapoint: 169
+
+  # datapoints for heating when sun screen present:
+  # heating_set_target_temp_datapoint: 176
+  # heating_get_target_temp_datapoint: 179
+  # heating_get_current_temp_datapoint: 177
+  # heating_get_heating_state_datapoint: 178
+
+  blinds_enabled: false
+  blinds_name: Luxor Blinds
+  blinds_set_direction_datapoint: 169
+  blinds_set_stop_datapoint: 170
+  blinds_set_position_datapoint: 171
+  blinds_get_position_datapoint: 174
 schema:
   mqtt_user: str
   mqtt_pass: str
@@ -154,3 +167,10 @@ schema:
   heating_get_target_temp_datapoint: int
   heating_get_current_temp_datapoint: int
   heating_get_heating_state_datapoint: int
+
+  blinds_enabled: bool
+  blinds_name: str
+  blinds_set_direction_datapoint: int
+  blinds_set_stop_datapoint: int
+  blinds_set_position_datapoint: int
+  blinds_get_position_datapoint: int
