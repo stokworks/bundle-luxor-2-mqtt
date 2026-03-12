@@ -1,5 +1,5 @@
 name: bundle2mqtt
-version: 0.0.29
+version: 0.0.30
 slug: bundle2mqtt
 url: https://github.com/stokworks/bundle-luxor-2-mqtt
 arch:
@@ -98,6 +98,45 @@ options:
   blinds_set_stop_datapoint: 170
   blinds_set_position_datapoint: 171
   blinds_get_position_datapoint: 174
+
+  weather_enabled: false
+  weather_name: Luxor Weather
+  weather_wind_speed_enabled: true
+  weather_wind_speed_name: Wind strength
+  weather_wind_speed_datapoint: 1
+  weather_wind_alarm_1_enabled: true
+  weather_wind_alarm_1_name: Wind alarm 1
+  weather_wind_alarm_1_datapoint: 2
+  weather_wind_alarm_2_enabled: true
+  weather_wind_alarm_2_name: Wind alarm 2
+  weather_wind_alarm_2_datapoint: 3
+  weather_outside_temp_enabled: true
+  weather_outside_temp_name: Outside temperature
+  weather_outside_temp_datapoint: 4
+  weather_frost_alarm_enabled: true
+  weather_frost_alarm_name: Frost alarm
+  weather_frost_alarm_datapoint: 5
+  weather_rain_alarm_enabled: true
+  weather_rain_alarm_name: Rain alarm
+  weather_rain_alarm_datapoint: 6
+  weather_illuminance_1_enabled: true
+  weather_illuminance_1_name: Illuminance 1
+  weather_illuminance_1_datapoint: 7
+  weather_illuminance_2_enabled: true
+  weather_illuminance_2_name: Illuminance 2
+  weather_illuminance_2_datapoint: 8
+  weather_illuminance_3_enabled: true
+  weather_illuminance_3_name: Illuminance 3
+  weather_illuminance_3_datapoint: 9
+  weather_illuminance_4_enabled: true
+  weather_illuminance_4_name: Illuminance 4
+  weather_illuminance_4_datapoint: 10
+  weather_twilight_1_enabled: true
+  weather_twilight_1_name: Dusk
+  weather_twilight_1_datapoint: 11
+  weather_twilight_2_enabled: true
+  weather_twilight_2_name: Dawn
+  weather_twilight_2_datapoint: 12
 schema:
   mqtt_user: str
   mqtt_pass: str
@@ -174,3 +213,42 @@ schema:
   blinds_set_stop_datapoint: int
   blinds_set_position_datapoint: int
   blinds_get_position_datapoint: int
+
+  weather_enabled: bool
+  weather_name: str
+  weather_wind_speed_enabled: bool
+  weather_wind_speed_name: str
+  weather_wind_speed_datapoint: int
+  weather_wind_alarm_1_enabled: bool
+  weather_wind_alarm_1_name: str
+  weather_wind_alarm_1_datapoint: int
+  weather_wind_alarm_2_enabled: bool
+  weather_wind_alarm_2_name: str
+  weather_wind_alarm_2_datapoint: int
+  weather_outside_temp_enabled: bool
+  weather_outside_temp_name: str
+  weather_outside_temp_datapoint: int
+  weather_frost_alarm_enabled: bool
+  weather_frost_alarm_name: str
+  weather_frost_alarm_datapoint: int
+  weather_rain_alarm_enabled: bool
+  weather_rain_alarm_name: str
+  weather_rain_alarm_datapoint: int
+  weather_illuminance_1_enabled: bool
+  weather_illuminance_1_name: str
+  weather_illuminance_1_datapoint: int
+  weather_illuminance_2_enabled: bool
+  weather_illuminance_2_name: str
+  weather_illuminance_2_datapoint: int
+  weather_illuminance_3_enabled: bool
+  weather_illuminance_3_name: str
+  weather_illuminance_3_datapoint: int
+  weather_illuminance_4_enabled: bool
+  weather_illuminance_4_name: str
+  weather_illuminance_4_datapoint: int
+  weather_twilight_1_enabled: bool
+  weather_twilight_1_name: str
+  weather_twilight_1_datapoint: int
+  weather_twilight_2_enabled: bool
+  weather_twilight_2_name: str
+  weather_twilight_2_datapoint: int

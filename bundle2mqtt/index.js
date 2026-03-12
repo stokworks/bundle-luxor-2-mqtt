@@ -9,6 +9,7 @@ const Switch = require('./devices/Switch');
 const Fan = require('./devices/Fan');
 const Heating = require('./devices/Heating');
 const Blind = require('./devices/Blind');
+const Weather = require('./devices/Weather');
 
 const MQTT_HOST = process.env.MQTT_HOST;
 const MQTT_PORT = process.env.MQTT_PORT;
@@ -117,6 +118,109 @@ const devices = [
     set_stop_datapoint: parseInt(process.env.BLINDS_SET_STOP_DATAPOINT),
     set_position_datapoint: parseInt(process.env.BLINDS_SET_POSITION_DATAPOINT),
     get_position_datapoint: parseInt(process.env.BLINDS_GET_POSITION_DATAPOINT),
+  }),
+  new Weather({
+    id: 'weather',
+    enabled: process.env.WEATHER_ENABLED === 'true',
+    name: process.env.WEATHER_NAME,
+    sensors: [
+      {
+        id: 'wind_speed',
+        enabled: process.env.WEATHER_WIND_SPEED_ENABLED === 'true',
+        name: process.env.WEATHER_WIND_SPEED_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_WIND_SPEED_DATAPOINT),
+        device_class: 'wind_speed',
+        unit: null,
+      },
+      {
+        id: 'wind_alarm_1',
+        enabled: process.env.WEATHER_WIND_ALARM_1_ENABLED === 'true',
+        name: process.env.WEATHER_WIND_ALARM_1_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_WIND_ALARM_1_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+      {
+        id: 'wind_alarm_2',
+        enabled: process.env.WEATHER_WIND_ALARM_2_ENABLED === 'true',
+        name: process.env.WEATHER_WIND_ALARM_2_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_WIND_ALARM_2_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+      {
+        id: 'outside_temp',
+        enabled: process.env.WEATHER_OUTSIDE_TEMP_ENABLED === 'true',
+        name: process.env.WEATHER_OUTSIDE_TEMP_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_OUTSIDE_TEMP_DATAPOINT),
+        device_class: 'temperature',
+        unit: '°C',
+      },
+      {
+        id: 'frost_alarm',
+        enabled: process.env.WEATHER_FROST_ALARM_ENABLED === 'true',
+        name: process.env.WEATHER_FROST_ALARM_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_FROST_ALARM_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+      {
+        id: 'rain_alarm',
+        enabled: process.env.WEATHER_RAIN_ALARM_ENABLED === 'true',
+        name: process.env.WEATHER_RAIN_ALARM_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_RAIN_ALARM_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+      {
+        id: 'illuminance_1',
+        enabled: process.env.WEATHER_ILLUMINANCE_1_ENABLED === 'true',
+        name: process.env.WEATHER_ILLUMINANCE_1_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_ILLUMINANCE_1_DATAPOINT),
+        device_class: 'illuminance',
+        unit: 'lx',
+      },
+      {
+        id: 'illuminance_2',
+        enabled: process.env.WEATHER_ILLUMINANCE_2_ENABLED === 'true',
+        name: process.env.WEATHER_ILLUMINANCE_2_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_ILLUMINANCE_2_DATAPOINT),
+        device_class: 'illuminance',
+        unit: 'lx',
+      },
+      {
+        id: 'illuminance_3',
+        enabled: process.env.WEATHER_ILLUMINANCE_3_ENABLED === 'true',
+        name: process.env.WEATHER_ILLUMINANCE_3_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_ILLUMINANCE_3_DATAPOINT),
+        device_class: 'illuminance',
+        unit: 'lx',
+      },
+      {
+        id: 'illuminance_4',
+        enabled: process.env.WEATHER_ILLUMINANCE_4_ENABLED === 'true',
+        name: process.env.WEATHER_ILLUMINANCE_4_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_ILLUMINANCE_4_DATAPOINT),
+        device_class: 'illuminance',
+        unit: 'lx',
+      },
+      {
+        id: 'twilight_1',
+        enabled: process.env.WEATHER_TWILIGHT_1_ENABLED === 'true',
+        name: process.env.WEATHER_TWILIGHT_1_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_TWILIGHT_1_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+      {
+        id: 'twilight_2',
+        enabled: process.env.WEATHER_TWILIGHT_2_ENABLED === 'true',
+        name: process.env.WEATHER_TWILIGHT_2_NAME,
+        datapoint_id: parseInt(process.env.WEATHER_TWILIGHT_2_DATAPOINT),
+        device_class: null,
+        unit: 'bool',
+      },
+    ]
   }),
 ];
 
