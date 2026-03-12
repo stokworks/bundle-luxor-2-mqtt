@@ -10,9 +10,9 @@ RUN apk add --no-cache \
     git \
     build-base
 
-COPY package.json /
-COPY index.js /
-COPY devices /
+COPY package.json /package.json
+COPY index.js /index.js
+COPY devices /devices
 
 RUN cd / && npm install --unsafe-perm
 
