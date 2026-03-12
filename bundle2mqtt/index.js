@@ -185,7 +185,9 @@ const receivedBridgeMessage = function(topic, message) {
   }
 
   devices.forEach(device => {
-    device.onBridgeMessage(topic, message);
+    if (device.getMqttId() === parts[1]) {
+      device.onBridgeMessage(topic, message);
+    }
   });
 }
 
