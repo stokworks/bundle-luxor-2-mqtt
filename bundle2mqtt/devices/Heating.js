@@ -97,10 +97,12 @@ class Heating extends Device {
     const action = this.get_heating_state_datapoint.value > 0 ? 'heating' : 'idle';
 
     this.publishMqtt('state', {
-      'target_temperature': target_temperature,
-      'current_temperature': current_temperature,
-      'mode': 'heat',
-      'action': action,
+      state: {
+        target_temperature: target_temperature,
+        current_temperature: current_temperature,
+        mode: 'heat',
+        action: action,
+      }
     });
   }
 

@@ -74,9 +74,9 @@ class Blind extends Device {
 
 
     this.publishMqtt('state', {
-      'state': {
-        'state': position === 0 ? 'open' : position === 255 ? 'closed' : 'stopped',
-        'position': position,
+      state: {
+        state: position === 0 ? 'open' : position === 255 ? 'closed' : 'stopped',
+        position: position,
       }
     });
   }

@@ -83,8 +83,10 @@ class Fan extends Device {
     }
 
     this.publishMqtt('state', {
-      'on': state === 'off' ? 'off' : 'on',
-      'percentage': state === 'high' ? 2 : (state === 'medium' ? 1 : 0)
+      state: {
+        'on': state === 'off' ? 'off' : 'on',
+        'percentage': state === 'high' ? 2 : (state === 'medium' ? 1 : 0)
+      },
     });
   }
 

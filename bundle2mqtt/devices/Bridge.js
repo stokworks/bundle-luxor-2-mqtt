@@ -69,7 +69,7 @@ class Bridge extends Device {
 
   publishState() {
     this.publishMqtt('state', {
-      'state': 'online'
+      state: 'online'
     });
   }
 

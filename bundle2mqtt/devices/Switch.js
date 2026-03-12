@@ -59,7 +59,7 @@ class Switch extends Device {
     const state = this.get_value_datapoint.value;
 
     this.publishMqtt('state', {
-      'state': (state ? 'on' : 'off')
+      state: (state ? 'on' : 'off')
     });
   }
 
