@@ -91,14 +91,20 @@ class Fan extends Device {
   }
 
   receivedBridgeMessage(topic, message) {
+    console.log('fan1', topic, message);
+
     if (!(this.set_value_med_datapoint && this.set_value_high_datapoint)) {
       return;
     }
 
+    console.log('fan2', topic, message);
+
     if (topic === 'on') {
+      console.log('fan3', topic, message);
       this.set_value_med_datapoint.setValue(message === 'on');
       this.set_value_high_datapoint.setValue(false);
     } else if (topic === 'percentage') {
+      console.log('fan4', topic, message);
       if (message === '0') {
         this.set_value_med_datapoint.setValue(false);
         this.set_value_high_datapoint.setValue(false);
