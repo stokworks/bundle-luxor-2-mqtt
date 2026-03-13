@@ -130,7 +130,7 @@ const devices = [
         name: process.env.WEATHER_WIND_SPEED_NAME,
         datapoint_id: parseInt(process.env.WEATHER_WIND_SPEED_DATAPOINT),
         device_class: 'wind_speed',
-        unit: null,
+        unit: 'km/h',
       },
       {
         id: 'wind_alarm_1',
